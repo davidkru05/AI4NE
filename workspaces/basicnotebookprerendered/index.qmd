@@ -1,0 +1,51 @@
+---
+title: "Quarto Computational Notebook Templates"
+subtitle: "Coding and reporting in one document"
+author: 
+  - name: "Your name"
+    affiliation: Department of Computational Cognitive Science, Tilburg University, Netherlands
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contents"
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    theme: darkly
+engine: jupyter
+jupyter: python3
+---
+
+# Basic notebook with code chunks
+To test whether everything is working, you can run this notebook. It does not require any packages at the moment. 
+
+# Code chunks
+In this notebook we have set codefolding by default. Which is set at the yaml header of the notebook at `format: html: code-fold: true`. You can override this setting for a specific code chunk by setting `#| code-fold: false` right after the chunk's start line.
+
+```{python}
+#| code-fold: false
+
+# This is a code chunk that will be executed when the document is rendered.
+hello = "Hello, world!"
+print(hello)
+```
+
+## Python code without evaluation
+You might want to include code chunks that are not evaluated when the document is rendered. This may be because you just want to highlight some key chuncks that are relevant to understand the preprocessing procedure. You can do this by setting `#| eval: false` right after the chunk's start line. In the current case we let de chunck to default to be folded.
+
+```{python}
+#| eval: false
+
+import scipy.stats as stats
+
+# simulate a timeseries of 1000 data points
+ts = stats.norm.rvs(size=1000)
+
+# take the mean
+mean_ts = stats.tmean(ts)
+print(f"The mean of the simulated timeseries is: {mean_ts}")
+```
+
+# Changing themes
+We are using the theme `darkly` here. Changing of the theme is easy. You can change the theme by changing the `theme` option in the yaml header of the notebook. For example, you can change it to `flatly` or `cosmo`. You can find a list of available themes [here](https://quarto.org/docs/output-formats/html-themes.html).  

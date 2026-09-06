@@ -1,0 +1,180 @@
+---
+title: "Quarto Computational Notebook Templates"
+subtitle: "Coding and reporting in one document"
+author: 
+  - name: "Wim Pouw"
+    affiliation: Department of Computational Cognitive Science, Tilburg University, Netherlands
+format:
+  html:
+    toc: true
+    toc-location: left
+    toc-title: "Contents"
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    theme: flatly
+bibliography: assets/AI4NErefs.bib
+csl: assets/plos-computational-biology.csl
+link-citations: true
+engine: jupyter
+jupyter: python3
+---
+
+# Features of this notebook
+
+In this template notebook we will be reusing Python code and Python packages that need to be appropriately cited. How do we do this?
+
+# Zotero
+We assume you are using Zotero or any reference manager where you can create bibliography files `.bib`. 
+
+## Zotero installation
+Download Zotero from [zotero.org/download](https://www.zotero.org/download/) and install it. It is free, open source, and runs on Windows, Mac and Linux. Make an account when prompted, so your library syncs, and you do not lose it when your laptop dies.
+
+Zotero sometimes updates the citation keys you will be using to reference in text. This can be a pain. Better BibTeX gives each item a fixed key that you can see and copy. So while you are installing/revisiting Zotero, also install the **Better BibTeX** plugin from [https://retorque.re/zotero-better-bibtex/installation/index.html](https://retorque.re/zotero-better-bibtex/installation/index.html). Download the `.xpi` file, then in Zotero go to `Tools` -> `Plugins` -> gear icon -> `Install Plugin From File`. This all will save you a lot of manual work later.
+
+# Saving references
+You can go to any article or book to save the reference via your Zotero plugin. Sometimes some software may provide you with a .bib formatted reference (e.g., [https://numpy.org/citing-numpy/](https://numpy.org/citing-numpy/)), like so:
+
+```{.bibtex style="max-height: 200px; overflow-y: auto;"}
+@Article{         harris2020array,
+ title         = {Array programming with {NumPy}},
+ author        = {Charles R. Harris and K. Jarrod Millman and St{\'{e}}fan J.
+                 van der Walt and Ralf Gommers and Pauli Virtanen and David
+                 Cournapeau and Eric Wieser and Julian Taylor and Sebastian
+                 Berg and Nathaniel J. Smith and Robert Kern and Matti Picus
+                 and Stephan Hoyer and Marten H. van Kerkwijk and Matthew
+                 Brett and Allan Haldane and Jaime Fern{\'{a}}ndez del
+                 R{\'{i}}o and Mark Wiebe and Pearu Peterson and Pierre
+                 G{\'{e}}rard-Marchant and Kevin Sheppard and Tyler Reddy and
+                 Warren Weckesser and Hameer Abbasi and Christoph Gohlke and
+                 Travis E. Oliphant},
+ year          = {2020},
+ month         = sep,
+ journal       = {Nature},
+ volume        = {585},
+ number        = {7825},
+ pages         = {357--362},
+ doi           = {10.1038/s41586-020-2649-2},
+ publisher     = {Springer Science and Business Media {LLC}},
+ url           = {https://doi.org/10.1038/s41586-020-2649-2}
+}
+```
+
+You can copy this reference with Cntrl + C and then in Zotero you add it like so `File` -> `Import from clipboard`. 
+
+We have saved all references for the book we cite, the GitHub page we use, and the Python packages we use, using the plugin or import from clipboard function, and we have hand-checked the reference for formatting issues.
+
+## Exporting .bib
+Right-click your collection in Zotero and choose `Export Collection`. Set format to **Better BibTeX**, tick **Keep updated**, and save it as `AI4NErefs.bib` (or any name you want to assign) in your `assets` folder.
+
+"Keep updated" is the important bit. Zotero now rewrites that file automatically whenever you add or edit a reference, so you never have to re-export. Add a paper, render, and it is there.
+
+For the reference style, search [zotero.org/styles](https://www.zotero.org/styles) for the journal you want, download the `.csl` file, and drop it in `assets` as well. Here we use PLOS Computational Biology, but swapping one line in the YAML switches the whole document to APA, Nature, or anything else.
+
+## Zotero plugin
+Install the Zotero Connector for your browser from [zotero.org/download](https://www.zotero.org/download/). It adds a small icon to your toolbar. When you are on a journal article, a book page, or a GitHub repository, click it and the reference is saved to your library with one click, including the PDF where available.
+
+Always check what it saved. Connectors regularly mangle author names, miss the year, or import a preprint as a webpage. Fixing it now is much faster than fixing thirty references the night before a deadline.
+
+### Automatic exporting of .bib for your used packages
+This is not really available at the moment. What you can automate is recording exactly which versions you ran, which is what makes your analysis reproducible. To be precise you can update the version numbers in your Zotero references:
+```{python}
+#| code-fold: false
+from importlib.metadata import version
+
+for pkg in ["numpy", "pandas", "plotly"]:
+    print(f"{pkg}: {version(pkg)}")
+```
+
+
+# Telling Quarto to use a .bib file
+So let's say you export your Zotero references to a .bib file called `AI4NErefs.bib` and you have saved it in the `assets` folder (along with your citation style .csl). You can then tell Quarto to use this .bib file by adding the following lines to the YAML header of your notebook:
+
+```yaml
+bibliography: assets/AI4NErefs.bib          # <1>
+csl: assets/plos-computational-biology.csl  # <2>
+link-citations: true                        # <3>
+```
+1. Your bibliography.
+2. The reference style.
+3. Make citations hyperlinks, allowing the reader to jump to the reference list.
+
+# Assume some Python code that we are using
+The following code creates a synthetic accelerometer dataset that can be used to build a ML pipeline without requiring the actual dataset already. The code for generating a synthetic accelerometer dataset was drawn from the following repository [https://github.com/nkcAna/WSDpython/tree/main/Chapter_5](https://github.com/nkcAna/WSDpython/tree/main/Chapter_5), which belongs to the book "Machine Learning in Farm Animal Behavior using Python". It makes use of the following Python packages which we would to cite too: `numpy`, `pandas`. 
+
+
+```{python style="max-height: 200px; overflow-y: auto;"}
+#| code-fold: false
+
+# Importing the libraries
+import numpy as np
+import pandas as pd
+
+# Firstly, we create a dataset with 1000 rows and 3 columns (for x, y, z axes)
+np.random.seed(0) # for reproducible results
+data = np.random.rand(1000,3)
+
+# We now create a dataframe from the data
+columns = ['x', 'y', 'z']
+df = pd.DataFrame(data, columns = columns)
+
+# For the purpose of our example, we manually assign the labels of our dataframe
+labels = ['walking']*300 + ['standing']*400 +['walking']*300
+
+# We then add the label column to the dataframe
+df['label'] = labels
+
+# Display the dataframe
+print(df)
+```
+
+# Plotting
+Let's use plotly to inspect the simulated dataset we created. Plotly is great as it has some interactive features such as a cursor hover expand function.
+
+```{python style="max-height: 200px; overflow-y: auto;"}
+import plotly.express as px
+import pandas as pd
+
+# Reshape from wide to long format for multi-variable plotting
+df_long = df.melt(id_vars=['label'], var_name='variable', value_name='value')
+
+# Option 1: Faceted Histograms with Box Marginals
+fig_hist = px.histogram(
+    df_long,
+    x='value',
+    color='label',
+    facet_col='variable',
+    marginal='box',           # Adds box plots above each histogram
+    barmode='overlay',        # Overlays distributions for direct comparison
+    opacity=0.6,
+    nbins=30,
+    title='Variable Distributions by Class Label'
+)
+
+fig_hist.update_layout(
+    xaxis_title='Value',
+    yaxis_title='Count',
+    legend_title='Class Label'
+)
+
+fig_hist.show()
+```
+
+# Citing in your text
+
+Every entry in your `.bib` has a short label at the top, the citation key. In the NumPy example above it is `harris2020array`. Typing that key in your text is all you need, Quarto builds the reference list at the bottom automatically.
+
+| What you type | What you get |
+|---------------|--------------|
+| `[@harris2020array]` | (Harris et al., 2020) |
+| `@harris2020array` | Harris et al. (2020) |
+| `[@harris2020array; @reback2020pandas]` | (Harris et al., 2020; Reback et al., 2020) |
+
+In practice, you rarely type these by hand. In the **visual editor** of VS Code or RStudio, type `@` and an autocomplete menu appears with your whole library. Pick one and it fills in the key. If you do need the key itself, right-click any item in Zotero and choose `Better BibTeX` -> `Copy Citation Key`.
+
+You can add an empty `# References` heading at the end of your document as that is where the references are appended by default.
+
+# Citations in action
+This code was drawn from [this repository](https://github.com/nkcAna/WSDpython/tree/main/Chapter_5), which belongs to the book "Machine Learning in Farm Animal Behavior using Python" [@kleanthous2025machine]. It makes use of `numpy` [@harris2020array] and `pandas` [@reback2020pandas], both of which we cite here.
+
+# References
