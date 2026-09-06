@@ -1,0 +1,31 @@
+{
+  "name": "Quarto & Python Data Science",
+  // Base Linux image with Python pre-installed
+  "image": "mcr.microsoft.com/devcontainers/python:3.11-bullseye",
+
+  // Modular Dev Container Features
+  "features": {
+    // Installs Quarto CLI automatically
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "latest"
+    }
+  },
+
+  // VS Code Settings & Extensions automatically loaded into Codespaces
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",             // Official Quarto extension
+        "ms-python.python",          // Python support
+        "ms-toolsai.jupyter"         // Jupyter Notebook engine for Quarto
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "quarto.render.renderOnSave": true
+      }
+    }
+  },
+
+  // Runs once the container is built to install your Python dependencies
+  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt"
+}
