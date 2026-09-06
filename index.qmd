@@ -46,7 +46,7 @@ import scipy.stats as stats
 ts = stats.norm.rvs(size=1000)
 
 # take the mean
-mean_ts = stats.tmean(ts)
+mean_ts = stats.tmean(ts) - 20
 print(f"The mean of the simulated timeseries is: {mean_ts}")
 ```
 
