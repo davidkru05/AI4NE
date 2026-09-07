@@ -1,0 +1,96 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"Quarto Computational Notebook Templates\"\n",
+        "subtitle: \"Coding and reporting in one document\"\n",
+        "author: \n",
+        "  - name: \"Your name\"\n",
+        "    affiliation: Department of Computational Cognitive Science, Tilburg University, Netherlands\n",
+        "format:\n",
+        "  html:\n",
+        "    toc: true\n",
+        "    toc-location: left\n",
+        "    toc-title: \"Contents\"\n",
+        "    toc-depth: 3\n",
+        "    number-sections: true\n",
+        "    code-fold: true\n",
+        "    theme: darkly\n",
+        "engine: jupyter\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "# Basic notebook with code chunks\n",
+        "To test whether everything is working, you can run this notebook. It does not require any packages at the moment. \n",
+        "\n",
+        "# Code chunks\n",
+        "In this notebook we have set codefolding by default. Which is set at the yaml header of the notebook at `format: html: code-fold: true`. You can override this setting for a specific code chunk by setting `#| code-fold: false` right after the chunk's start line."
+      ],
+      "id": "a84dd1d6"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| code-fold: false\n",
+        "\n",
+        "# This is a code chunk that will be executed when the document is rendered.\n",
+        "hello = \"Hello, cccccccc!\"\n",
+        "print(hello)"
+      ],
+      "id": "75380e87",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Python code without evaluation\n",
+        "You might want to include code chunks that are not evaluated when the document is rendered. This may be because you just want to highlight some key chuncks that are relevant to understand the preprocessing procedure. You can do this by setting `#| eval: false` right after the chunk's start line. In the current case we let de chunck to default to be folded."
+      ],
+      "id": "a2b318e5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "#| eval: false\n",
+        "\n",
+        "import scipy.stats as stats\n",
+        "\n",
+        "# simulate a timeseries of 1000 data points\n",
+        "ts = stats.norm.rvs(size=1000)\n",
+        "\n",
+        "# take the mean\n",
+        "mean_ts = stats.tmean(ts)\n",
+        "print(f\"The mean of the simulated timeseries is: {mean_ts}\")"
+      ],
+      "id": "5573dc56",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Changing themes\n",
+        "We are using the theme `darkly` here. Changing of the theme is easy. You can change the theme by changing the `theme` option in the yaml header of the notebook. For example, you can change it to `flatly` or `cosmo`. You can find a list of available themes [here](https://quarto.org/docs/output-formats/html-themes.html).  "
+      ],
+      "id": "598eb32f"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "name": "python3",
+      "language": "python",
+      "display_name": "Python 3 (ipykernel)",
+      "path": "/home/vscode/.local/share/jupyter/kernels/python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

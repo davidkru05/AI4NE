@@ -27,7 +27,7 @@ In this notebook we have set codefolding by default. Which is set at the yaml he
 #| code-fold: false
 
 # This is a code chunk that will be executed when the document is rendered.
-hello = "Hello, bbbbbbb!"
+hello = "Hello, eeeeee!"
 print(hello)
 ```
 
